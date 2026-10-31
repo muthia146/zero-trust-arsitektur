@@ -2,6 +2,10 @@
 
 Proyek ini adalah implementasi sistem penilaian akademik berbasis _microservices_ yang menerapkan prinsip **Zero Trust Security** sesuai pedoman NIST SP 800-207.
 
+Nama : Muthia Anggraeni Rukmawan
+
+NPM : 247006111029
+
 ## Ringkasan Arsitektur
 
 Sistem ini terdiri dari tiga komponen utama yang berjalan pada port berbeda:
