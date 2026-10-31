@@ -10,19 +10,15 @@ const PORT = 3002;
 const JWT_SECRET = 'SUPER_SECRET_JWT_KEY';
 const GATEWAY_SECRET = 'RAHASIA_GATEWAY_123';
 
-// Hubungkan ke database bersama
 const db = new Database(path.join(__dirname, '../database/db.sqlite'));
 
-// Middleware Defense in Depth
 const verifyServiceAuth = (req, res, next) => {
   const gatewaySecretHeader = req.headers['x-gateway-secret'];
-  
-  // 1. Verifikasi Gateway Secret
+
   if (!gatewaySecretHeader || gatewaySecretHeader !== GATEWAY_SECRET) {
     return res.status(403).json({ error: 'Akses ditolak: Request harus melalui API Gateway!' });
   }
 
-  // 2. Verifikasi Token JWT
   const authHeader = req.headers['authorization'];
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     return res.status(401).json({ error: 'Token tidak ditemukan!' });
@@ -31,17 +27,15 @@ const verifyServiceAuth = (req, res, next) => {
   const token = authHeader.split(' ')[1];
   try {
     const decoded = jwt.verify(token, JWT_SECRET);
-    req.user = decoded; // Menyimpan data payload token (sub, role, dll)
+    req.user = decoded; 
     next();
   } catch (err) {
     return res.status(401).json({ error: 'Token tidak valid atau sudah kedaluwarsa!' });
   }
 };
 
-// Terapkan middleware keamanan ke semua endpoint[cite: 2]
 app.use(verifyServiceAuth);
 
-// Endpoint GET /transkrip/:nim
 app.get('/transkrip/:nim', (req, res) => {
   const { nim } = req.params;
 
@@ -57,14 +51,13 @@ app.get('/transkrip/:nim', (req, res) => {
   res.json({ status: 'success', data: results });
 });
 
-// Endpoint POST /transkrip/sinkron (Khusus Token Service)[cite: 3]
 app.post('/transkrip/sinkron', (req, res) => {
-  // Hanya menerima token dengan role "service"[cite: 3]
+
   if (req.user.role !== 'service') {
     return res.status(403).json({ error: 'Akses ditolak: Endpoint ini hanya untuk antar-service!' });
   }
 
-  const { items } = req.body; // Array data nilai yang dikirim dari Service Nilai
+  const { items } = req.body; 
 
   if (!items || !Array.isArray(items)) {
     return res.status(400).json({ error: 'Format data tidak valid!' });
