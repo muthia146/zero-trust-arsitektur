@@ -19,25 +19,25 @@ Sistem ini terdiri dari tiga komponen utama yang berjalan pada port berbeda:
 Pastikan Node.js sudah terinstal. Buka 3 terminal terpisah untuk menjalankan masing-masing _service_:
 
 **Terminal 1 (API Gateway):**
-\`\`\`bash
+```bash
 cd api-gateway
 npm install
 node server.js
-\`\`\`
+```
 
 **Terminal 2 (Service Nilai):**
-\`\`\`bash
+```bash
 cd service-nilai
 npm install
 node server.js
-\`\`\`
+```
 
 **Terminal 3 (Service Transkrip):**
-\`\`\`bash
+```bash
 cd service-transkrip
 npm install
 node server.js
-\`\`\`
+```
 
 ## Daftar Akun & Device ID (Data Awal)
 
